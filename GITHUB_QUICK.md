@@ -21,7 +21,7 @@
 ```bash
 cd D:/xampp/php-8-2-0/htdocs/hackathon
 
-git remote add origin https://github.com/rubel9997/smart-project-estimator.git
+git remote add origin https://github.com/theimahamud/smart-project-estimator.git
 
 git branch -M main
 
@@ -32,7 +32,7 @@ git push -u origin main
 
 ### 3️⃣ ENTER CREDENTIALS
 
-**Username:** `rubel9997`
+**Username:** `theimahamud`
 
 **Password:** Personal Access Token from https://github.com/settings/tokens/new
 
@@ -41,7 +41,7 @@ git push -u origin main
 ## ✅ DONE!
 
 Your project will be live at:
-**https://github.com/rubel9997/smart-project-estimator**
+**https://github.com/theimahamud/smart-project-estimator**
 
 ---
 

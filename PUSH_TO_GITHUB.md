@@ -4,7 +4,7 @@
 
 Your local repository is initialized and committed!
 
-**Your GitHub username:** `rubel9997`
+**Your GitHub username:** `theimahamud`
 **Repository name:** `smart-project-estimator`
 
 ---
@@ -29,7 +29,7 @@ Your local repository is initialized and committed!
 ```bash
 cd D:/xampp/php-8-2-0/htdocs/hackathon
 
-git remote add origin https://github.com/rubel9997/smart-project-estimator.git
+git remote add origin https://github.com/theimahamud/smart-project-estimator.git
 
 git branch -M main
 
@@ -42,7 +42,7 @@ git push -u origin main
 
 When prompted for credentials:
 
-**Username:** `rubel9997`
+**Username:** `theimahamud`
 
 **Password:** Use a **Personal Access Token** (NOT your GitHub password)
 
@@ -66,13 +66,13 @@ When prompted for credentials:
 ### 2. Run Commands
 ```bash
 cd D:/xampp/php-8-2-0/htdocs/hackathon
-git remote add origin https://github.com/rubel9997/smart-project-estimator.git
+git remote add origin https://github.com/theimahamud/smart-project-estimator.git
 git branch -M main
 git push -u origin main
 ```
 
 ### 3. Enter Credentials
-- Username: `rubel9997`
+- Username: `theimahamud`
 - Password: `[Your Personal Access Token]`
 
 ---
@@ -80,7 +80,7 @@ git push -u origin main
 ## 🎯 Repository Will Be Live At:
 
 ```
-https://github.com/rubel9997/smart-project-estimator
+https://github.com/theimahamud/smart-project-estimator
 ```
 
 ---
@@ -128,9 +128,9 @@ git push
 - [ ] Set visibility: Public
 - [ ] Click "Create repository"
 - [ ] Run the connection commands above
-- [ ] Enter username: `rubel9997`
+- [ ] Enter username: `theimahamud`
 - [ ] Enter token as password
-- [ ] Verify at: https://github.com/rubel9997/smart-project-estimator
+- [ ] Verify at: https://github.com/theimahamud/smart-project-estimator
 
 ---
 
@@ -139,7 +139,7 @@ git push
 Once pushed, your project will be live and public on GitHub!
 
 **Repository URL:**
-https://github.com/rubel9997/smart-project-estimator
+https://github.com/theimahamud/smart-project-estimator
 
 ---
 
