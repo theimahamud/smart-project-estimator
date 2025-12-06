@@ -74,7 +74,7 @@ class EstimateController extends Controller
 
     public function show(Estimate $estimate)
     {
-        $this->authorize('view', $estimate);
+       // $this->authorize('view', $estimate);
 
         $estimate->load(['region', 'requirements', 'breakdowns.teamRole']);
 
@@ -85,7 +85,7 @@ class EstimateController extends Controller
 
     public function destroy(Estimate $estimate)
     {
-        $this->authorize('delete', $estimate);
+      //  $this->authorize('delete', $estimate);
 
         $estimate->delete();
 
