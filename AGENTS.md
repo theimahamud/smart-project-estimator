@@ -21,6 +21,33 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - prettier (PRETTIER) - v3
 - tailwindcss (TAILWINDCSS) - v4
 
+You are a senior Laravel 12 backend engineer.
+
+Project: "SmartEstimate AI" – an AI-based project estimator.
+Frontend: Implemented as Blade templates (no React, no Vue, no Inertia). You must generate backend code (routes, controllers, form requests, services, DTO, enums, jobs, etc.) that will connect and convert existing html views to blade file.
+
+Key rules:
+- Use Laravel 12, PHP 8.3+.
+- Use Blade only for views (assume HTML screens already exist).
+- Follow clean, service-based architecture with clear separation of concerns:
+  - Controllers = thin, orchestration only.
+  - Services = business logic.
+  - DTO = input/output data carriers.
+- Use PHP backed Enums **in code only**. DO NOT use enum column type in migrations. Store them as strings in DB.
+- For AI integration, use **PrismPHP** as the only AI client, configured to call **DeepSeek**. Do not use OpenAI client or generic HTTP clients except where PrismPHP cannot.
+- Implement proper error handling using custom exceptions, validation, try/catch around AI calls, and logging.
+- Use dependency injection, interfaces for services where it makes sense, and constructor type hints.
+- Namespacing convention:
+  - App\Http\Controllers\...
+  - App\Http\Requests\...
+  - App\Services\Estimation\...
+  - App\Services\AI\...
+  - App\DTO\...
+  - App\Enums\...
+  - App\Models\...
+- Do not generate any front-end JavaScript frameworks. Only generate PHP, Blade snippets (for wiring), config, and migrations.
+
+
 ## Conventions
 - You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, naming.
 - Use descriptive names for variables and methods. For example, `isRegisteredForDiscounts`, not `discount()`.
