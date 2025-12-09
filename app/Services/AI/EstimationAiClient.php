@@ -8,13 +8,14 @@ use App\DTO\RequirementsDTO;
 use App\Exceptions\AiEstimationFailedException;
 use App\Exceptions\InvalidEstimationResponseException;
 use Illuminate\Support\Facades\Log;
-use Prism\Prism\Facades\Prism;
 use Prism\Prism\Enums\Provider;
+use Prism\Prism\Facades\Prism;
 use Prism\Prism\Text\Response as TextResponse;
 
 class EstimationAiClient implements EstimationAiClientInterface
 {
     private const MAX_RETRIES = 2;
+
     private const RETRY_DELAY = 1000; // milliseconds
 
     public function generateEstimatePayload(
@@ -24,7 +25,7 @@ class EstimationAiClient implements EstimationAiClientInterface
     ): array {
         try {
             $prompt = $this->buildPrompt($projectBasics, $requirements, $context);
-            
+
             Log::info('Sending AI estimation request', [
                 'project_type' => $projectBasics->projectType->value,
                 'domain_type' => $projectBasics->domainType->value,
@@ -33,7 +34,7 @@ class EstimationAiClient implements EstimationAiClientInterface
             ]);
 
             $response = $this->callDeepSeekWithRetry($prompt);
-            
+
             return $this->parseAiResponse(['content' => $response->text]);
 
         } catch (InvalidEstimationResponseException $e) {
@@ -45,7 +46,7 @@ class EstimationAiClient implements EstimationAiClientInterface
             ]);
 
             throw new AiEstimationFailedException(
-                'AI estimation request failed: ' . $e->getMessage(),
+                'AI estimation request failed: '.$e->getMessage(),
                 [
                     'project_name' => $projectBasics->name,
                     'error_type' => get_class($e),
@@ -64,7 +65,7 @@ class EstimationAiClient implements EstimationAiClientInterface
         $hasDeadline = $context->hasFixedDeadline();
         $deadlineText = $hasDeadline ? ($context->fixedDeadline?->format('Y-m-d') ?? 'Invalid') : 'No';
         $complianceText = $context->isHighCompliance ? 'Yes' : 'No';
-        
+
         return <<<PROMPT
 You are an expert software project estimator. Generate a detailed project estimation based on the following information.
 
@@ -161,7 +162,7 @@ PROMPT;
     public function parseAiResponse(array $response): array
     {
         $content = $response['content'] ?? '';
-        
+
         if (empty($content)) {
             throw new InvalidEstimationResponseException(
                 'Empty content in AI response',
@@ -176,10 +177,10 @@ PROMPT;
         }
 
         $decoded = json_decode($content, true);
-        
+
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new InvalidEstimationResponseException(
-                'Invalid JSON in AI response: ' . json_last_error_msg(),
+                'Invalid JSON in AI response: '.json_last_error_msg(),
                 ['raw_response' => $content],
                 json_last_error_msg()
             );
@@ -188,14 +189,14 @@ PROMPT;
         // Validate required fields
         $requiredFields = [
             'total_hours_min',
-            'total_hours_max', 
+            'total_hours_max',
             'confidence',
             'modules',
-            'recommended_team'
+            'recommended_team',
         ];
 
         foreach ($requiredFields as $field) {
-            if (!isset($decoded[$field])) {
+            if (! isset($decoded[$field])) {
                 throw new InvalidEstimationResponseException(
                     "Missing required field: {$field}",
                     $decoded,
@@ -222,12 +223,15 @@ PROMPT;
         for ($attempt = 0; $attempt <= self::MAX_RETRIES; $attempt++) {
             try {
                 $response = Prism::text()
-                    ->using(Provider::DeepSeek)
-                    ->withModel(config('prism.providers.deepseek.model', 'deepseek-coder'))
+                    ->using(Provider::DeepSeek, config('ai.services.deepseek.model', 'deepseek-chat'))
                     ->withSystemPrompt('You are an expert software project estimator specializing in accurate time and cost estimates for development projects.')
                     ->withPrompt($prompt)
-                    ->withTemperature(0.1) 
-                    ->withMaxTokens(50000)
+                    ->usingTemperature(config('ai.services.deepseek.temperature', 0.1))
+                    ->withMaxTokens(config('ai.services.deepseek.max_tokens', 1500))
+                    ->withClientOptions([
+                        'timeout' => config('ai.services.deepseek.timeout', 120),
+                        'connect_timeout' => 10,
+                    ])
                     ->asText();
 
                 if (empty($response->text)) {
@@ -243,7 +247,7 @@ PROMPT;
 
             } catch (\Exception $e) {
                 $lastException = $e;
-                
+
                 Log::warning('AI estimation attempt failed', [
                     'attempt' => $attempt + 1,
                     'error' => $e->getMessage(),
@@ -263,7 +267,7 @@ PROMPT;
         }
 
         throw new AiEstimationFailedException(
-            'Failed to get response from DeepSeek after ' . (self::MAX_RETRIES + 1) . ' attempts',
+            'Failed to get response from DeepSeek after '.(self::MAX_RETRIES + 1).' attempts',
             [
                 'error' => $lastException?->getMessage(),
                 'attempts' => self::MAX_RETRIES + 1,
@@ -294,16 +298,16 @@ PROMPT;
 
         // Validate confidence level
         $validConfidences = ['low', 'medium', 'high'];
-        if (!in_array($data['confidence'], $validConfidences)) {
+        if (! in_array($data['confidence'], $validConfidences)) {
             throw new InvalidEstimationResponseException(
                 'Invalid confidence level',
                 $data,
-                'Confidence must be: ' . implode(', ', $validConfidences)
+                'Confidence must be: '.implode(', ', $validConfidences)
             );
         }
 
         // Validate modules
-        if (!is_array($data['modules']) || empty($data['modules'])) {
+        if (! is_array($data['modules']) || empty($data['modules'])) {
             throw new InvalidEstimationResponseException(
                 'Modules must be a non-empty array',
                 $data,
@@ -316,7 +320,7 @@ PROMPT;
         }
 
         // Validate team
-        if (!is_array($data['recommended_team']) || empty($data['recommended_team'])) {
+        if (! is_array($data['recommended_team']) || empty($data['recommended_team'])) {
             throw new InvalidEstimationResponseException(
                 'Recommended team must be a non-empty array',
                 $data,
@@ -332,9 +336,9 @@ PROMPT;
     private function validateModule(array $module, int $index): void
     {
         $required = ['name', 'description', 'total_hours_min', 'total_hours_max', 'priority', 'features'];
-        
+
         foreach ($required as $field) {
-            if (!isset($module[$field])) {
+            if (! isset($module[$field])) {
                 throw new InvalidEstimationResponseException(
                     "Missing field '{$field}' in module {$index}",
                     ['module' => $module],
@@ -344,7 +348,7 @@ PROMPT;
         }
 
         // Validate features
-        if (!is_array($module['features'])) {
+        if (! is_array($module['features'])) {
             throw new InvalidEstimationResponseException(
                 "Features must be an array in module {$index}",
                 ['module' => $module],
@@ -356,9 +360,9 @@ PROMPT;
     private function validateTeamRole(array $role, int $index): void
     {
         $required = ['role', 'count', 'total_hours'];
-        
+
         foreach ($required as $field) {
-            if (!isset($role[$field])) {
+            if (! isset($role[$field])) {
                 throw new InvalidEstimationResponseException(
                     "Missing field '{$field}' in team role {$index}",
                     ['role' => $role],
@@ -379,20 +383,20 @@ PROMPT;
     private function isNonRetryableError(\Exception $e): bool
     {
         // Don't retry on authentication errors
-        if (str_contains($e->getMessage(), 'authentication') || 
+        if (str_contains($e->getMessage(), 'authentication') ||
             str_contains($e->getMessage(), 'unauthorized') ||
             str_contains($e->getMessage(), 'api key')) {
             return true;
         }
 
         // Don't retry on rate limit errors (they need time to reset)
-        if (str_contains($e->getMessage(), 'rate limit') || 
+        if (str_contains($e->getMessage(), 'rate limit') ||
             str_contains($e->getMessage(), 'too many requests')) {
             return true;
         }
 
         // Don't retry on model errors
-        if (str_contains($e->getMessage(), 'model') || 
+        if (str_contains($e->getMessage(), 'model') ||
             str_contains($e->getMessage(), 'not found')) {
             return true;
         }
