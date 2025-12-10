@@ -1,111 +1,86 @@
-<x-layouts.app>
+<x-layouts.main>
+    <x-slot:title>Projects Dashboard</x-slot:title>
 
-    <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ __('Dashboard')}}</h1>
-        <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('Welcome to the dashboard') }}</p>
+    <!-- Page Heading -->
+    <div class="mb-8">
+        <p class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Projects</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Total Users') }}</p>
-                    <p class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-1">--</p>
-                    <p class="text-xs text-gray-500 flex items-center mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                        </svg>
-                        {{ __('No data') }}
-                    </p>
-                </div>
-                <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 dark:text-blue-300"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                </div>
+    @if($recentEstimates->count() > 0)
+        <!-- Projects Table -->
+        <div class="px-0 py-3 @container">
+            <div class="flex overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-black/20">
+                <table class="flex-1 w-full text-left">
+                    <thead>
+                        <tr class="bg-gray-50 dark:bg-white/5">
+                            <th class="px-6 py-4 text-left text-gray-800 dark:text-gray-300 w-1/4 text-sm font-medium leading-normal">Project name</th>
+                            <th class="px-6 py-4 text-left text-gray-800 dark:text-gray-300 text-sm font-medium leading-normal">Domain</th>
+                            <th class="px-6 py-4 text-left text-gray-800 dark:text-gray-300 text-sm font-medium leading-normal">Tech stack</th>
+                            <th class="px-6 py-4 text-left text-gray-800 dark:text-gray-300 text-sm font-medium leading-normal">Country</th>
+                            <th class="px-6 py-4 text-left text-gray-800 dark:text-gray-300 text-sm font-medium leading-normal">Estimated cost</th>
+                            <th class="px-6 py-4 text-left text-gray-800 dark:text-gray-300 text-sm font-medium leading-normal">Duration</th>
+                            <th class="px-6 py-4 text-left text-gray-800 dark:text-gray-300 w-28 text-sm font-medium leading-normal">Confidence</th>
+                            <th class="px-6 py-4 text-left text-gray-500 w-28 text-sm font-medium leading-normal"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+                        @foreach($recentEstimates as $estimate)
+                            <tr>
+                                <td class="h-[72px] px-6 py-2 text-gray-900 dark:text-white text-sm font-normal leading-normal">
+                                    {{ $estimate->project->name }}
+                                </td>
+                                <td class="h-[72px] px-6 py-2 text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
+                                    {{ $estimate->project->domain_type->label() }}
+                                </td>
+                                <td class="h-[72px] px-6 py-2 text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
+                                    {{ implode(', ', $estimate->tech_stack ?? []) }}
+                                </td>
+                                <td class="h-[72px] px-6 py-2 text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
+                                    {{ strtoupper($estimate->workforce_country_code) }}
+                                </td>
+                                <td class="h-[72px] px-6 py-2 text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
+                                    ${{ number_format(($estimate->total_hours_min + $estimate->total_hours_max) / 2 * 100) }}
+                                </td>
+                                <td class="h-[72px] px-6 py-2 text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
+                                    {{ ceil(($estimate->total_hours_min + $estimate->total_hours_max) / 2 / 40) }} weeks
+                                </td>
+                                <td class="h-[72px] px-6 py-2 text-sm font-normal leading-normal">
+                                    @php
+                                        $confidenceClass = match(true) {
+                                            $estimate->confidence_score >= 80 => 'bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300',
+                                            $estimate->confidence_score >= 50 => 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300',
+                                            default => 'bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300'
+                                        };
+                                        $confidenceLabel = match(true) {
+                                            $estimate->confidence_score >= 80 => 'High',
+                                            $estimate->confidence_score >= 50 => 'Medium',
+                                            default => 'Low'
+                                        };
+                                    @endphp
+                                    <span class="inline-flex items-center rounded-full {{ $confidenceClass }} px-3 py-1 text-xs font-medium">{{ $confidenceLabel }}</span>
+                                </td>
+                                <td class="h-[72px] px-6 py-2 text-primary dark:text-primary/90 text-sm font-bold leading-normal tracking-[0.015em]">
+                                    <a href="{{ route('estimates.show', $estimate) }}" class="hover:underline">View details</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-
-        <!-- Revenue Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Total Revenue') }}</p>
-                    <p class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-1">--</p>
-                    <p class="text-xs text-gray-500 flex items-center mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                        </svg>
-                        {{ __('No data') }}
-                    </p>
+    @else
+        <!-- Empty State -->
+        <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl p-12 mt-8 text-center bg-white dark:bg-black/20">
+            <div class="flex flex-col items-center gap-6">
+                <div class="bg-center bg-no-repeat aspect-video bg-contain w-full max-w-[280px]" data-alt="Illustration of a person planning on a whiteboard" style='background-image: url("https://img.freepik.com/free-vector/project-management-planning-workflow-organization-concept-flat-vector-illustration-with-characters_128772-763.jpg?w=1060");'></div>
+                <div class="flex max-w-[480px] flex-col items-center gap-2">
+                    <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] max-w-[480px] text-center">No estimates yet.</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-normal max-w-[480px] text-center">Get started by creating your first project estimate.</p>
                 </div>
-                <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 dark:text-green-300"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
+                <a href="{{ route('estimates.create') }}" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                    <span class="truncate">Create your first estimate</span>
+                </a>
             </div>
         </div>
-
-        <!-- Orders Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Total Orders') }}</p>
-                    <p class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-1">--</p>
-                    <p class="text-xs text-gray-500 flex items-center mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                        </svg>
-                        {{ __('No data') }}
-                    </p>
-                </div>
-                <div class="bg-purple-100 dark:bg-purple-900 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-500 dark:text-purple-300"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        <!-- Visitors Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Total Visitors') }}</p>
-                    <p class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-1">--</p>
-                    <p class="text-xs text-gray-500 flex items-center mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                        </svg>
-                        {{ __('No data') }}
-                    </p>
-                </div>
-                <div class="bg-orange-100 dark:bg-orange-900 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-orange-500 dark:text-orange-300"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</x-layouts.app>
+    @endif
+</x-layouts.main>

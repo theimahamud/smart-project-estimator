@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New Estimate: Context - SmartEstimate AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1,200..400" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#327be2",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111821",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full">
+<!-- SideNavBar -->
+<aside class="flex-col bg-white dark:bg-gray-900/50 w-64 border-r border-gray-200 dark:border-gray-800 hidden md:flex">
+<div class="flex h-full min-h-[700px] flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3 px-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="SmartEstimate AI Logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCeIBRGHA2DemW8kaSe9lVX9cH0iDbFQqbwIr5bhY2mrxCY0Taa-hO7_CVNjTM748qvAE5dSAWwY9sr954iD6Ta-TzAQQRIUQ9ZfZzB6rhzUL3FBDT61TQZ6vgCNE9gC0DAgA33cMCE7WYFuCYCRc0HKPMep8jJp0q10FlLhk7gxO9dAzRJE7-DPJvkJUTZ6oSbfrBgsc8ws_6-Ili9bEJxB03yyh0vrP9md8shhqB_J5P9JrP06ZMnOnVx-EoX9gLRZNv9P2jTFpw");'></div>
+<div class="flex flex-col">
+<h1 class="text-gray-900 dark:text-white text-base font-semibold leading-normal">SmartEstimate AI</h1>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-gray-900 dark:text-white">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 dark:bg-primary/20" href="#">
+<span class="material-symbols-outlined text-primary font-bold">stacks</span>
+<p class="text-primary text-sm font-semibold leading-normal">Estimates</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-gray-900 dark:text-white">folder_managed</span>
+<p class="text-sm font-medium leading-normal">Projects</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-gray-900 dark:text-white">groups</span>
+<p class="text-sm font-medium leading-normal">Clients</p>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
+<span class="truncate">New Estimate</span>
+</button>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-gray-900 dark:text-white">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-gray-900 dark:text-white">help</span>
+<p class="text-sm font-medium leading-normal">Help</p>
+</a>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<div class="flex flex-col flex-1 w-full">
+<!-- TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 h-16 px-4 sm:px-6 lg:px-8 sticky top-0 z-10">
+<div class="flex items-center gap-4 text-gray-900 dark:text-white">
+<button class="md:hidden">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- Breadcrumbs -->
+<div class="hidden sm:flex flex-wrap gap-2">
+<a class="text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary" href="#">Estimates</a>
+<span class="text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal">/</span>
+<a class="text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary" href="#">New Estimate</a>
+<span class="text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal">/</span>
+<span class="text-gray-900 dark:text-white text-sm font-medium leading-normal">Context</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex cursor-pointer items-center justify-center rounded-full h-10 w-10 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBUTz28JZGUfM6e1aRwVKb1KaaU4mX6hy-donEqeeSh3IPCzIvmhyUiYjgS0mGfLZd145KFcbVn3BVoeZm1z0QSzpWXO9a4dHxyAeYeb7B8TgRlHigDmqoleNjCf1WbRD8QatphT8OZaXjaVJUdiewROA56TEcvEehLW7L8TRyDQyqnwsAu4TB3ORqZjAls9Lqh4kSR5JES6KyuAN7cENCzPSvFCJ4QuZDMc4Wwma-zH5M1gZx65UmDDTH7_TWWK1fjt9MqqzIOHyk");'></div>
+</div>
+</header>
+<!-- Main area -->
+<main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+<div class="max-w-4xl mx-auto">
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between gap-3 mb-6">
+<div class="flex min-w-72 flex-col gap-2">
+<p class="text-gray-900 dark:text-white text-3xl font-bold tracking-tight">New Estimate: Context</p>
+<p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">Step 3 of 4</p>
+</div>
+</div>
+<!-- Stepper -->
+<div class="mb-8">
+<ol class="flex items-center w-full">
+<li class="flex w-full items-center text-primary after:content-[''] after:w-full after:h-1 after:border-b after:border-primary after:border-2 after:inline-block dark:after:border-primary">
+<span class="flex items-center justify-center w-10 h-10 bg-primary rounded-full shrink-0">
+<span class="material-symbols-outlined text-white">check</span>
+</span>
+</li>
+<li class="flex w-full items-center text-primary after:content-[''] after:w-full after:h-1 after:border-b after:border-primary after:border-2 after:inline-block dark:after:border-primary">
+<span class="flex items-center justify-center w-10 h-10 bg-primary rounded-full shrink-0">
+<span class="material-symbols-outlined text-white">check</span>
+</span>
+</li>
+<li class="flex w-full items-center text-primary after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 dark:after:border-gray-700 after:border-2 after:inline-block">
+<span class="flex items-center justify-center w-10 h-10 bg-primary rounded-full shrink-0 ring-4 ring-primary/20 dark:ring-primary/30">
+<p class="font-bold text-white">3</p>
+</span>
+</li>
+<li class="flex items-center w-auto">
+<span class="flex items-center justify-center w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full shrink-0">
+<p class="font-bold text-gray-500 dark:text-gray-400">4</p>
+</span>
+</li>
+</ol>
+</div>
+<!-- Form sections -->
+<div class="space-y-8">
+<!-- Team & Location Card -->
+<div class="bg-white dark:bg-gray-900/50 rounded-xl border border-gray-200 dark:border-gray-800">
+<div class="p-6 border-b border-gray-200 dark:border-gray-800">
+<h2 class="text-gray-900 dark:text-white text-lg font-semibold leading-tight">Team &amp; Location</h2>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Specify the team composition and location to refine cost estimates.</p>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="country">Workforce Country</label>
+<select class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm" id="country" name="country">
+<option>United States</option>
+<option>Canada</option>
+<option>United Kingdom</option>
+<option>Global Average</option>
+</select>
+</div>
+<div>
+<h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Team Seniority</h3>
+<div class="flex flex-wrap gap-4">
+<label class="flex items-center space-x-2 cursor-pointer"><input class="text-primary focus:ring-primary" name="seniority" type="radio"/><span class="text-gray-800 dark:text-gray-200">Junior</span></label>
+<label class="flex items-center space-x-2 cursor-pointer"><input class="text-primary focus:ring-primary" name="seniority" type="radio"/><span class="text-gray-800 dark:text-gray-200">Mid</span></label>
+<label class="flex items-center space-x-2 cursor-pointer"><input checked="" class="text-primary focus:ring-primary" name="seniority" type="radio"/><span class="text-gray-800 dark:text-gray-200">Senior</span></label>
+<label class="flex items-center space-x-2 cursor-pointer"><input class="text-primary focus:ring-primary" name="seniority" type="radio"/><span class="text-gray-800 dark:text-gray-200">Blended</span></label>
+</div>
+</div>
+</div>
+</div>
+<!-- Tech Stack Card -->
+<div class="bg-white dark:bg-gray-900/50 rounded-xl border border-gray-200 dark:border-gray-800">
+<div class="p-6 border-b border-gray-200 dark:border-gray-800">
+<h2 class="text-gray-900 dark:text-white text-lg font-semibold leading-tight">Tech Stack</h2>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Select the primary technologies you plan to use. If undecided, choose 'Not sure'.</p>
+</div>
+<div class="p-6">
+<div class="flex flex-wrap gap-3">
+<button class="px-4 py-2 rounded-full text-sm font-medium bg-primary text-white border border-primary">React</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700">Vue.js</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700">Angular</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium bg-primary text-white border border-primary">Python</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700">Node.js</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700">Ruby on Rails</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700">Java</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium bg-primary text-white border border-primary">AWS</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700">Google Cloud</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700">Azure</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700">Swift</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700">Kotlin</button>
+<button class="px-4 py-2 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-transparent hover:bg-gray-200 dark:hover:bg-gray-700">Not sure</button>
+</div>
+</div>
+</div>
+<!-- Constraints Card -->
+<div class="bg-white dark:bg-gray-900/50 rounded-xl border border-gray-200 dark:border-gray-800">
+<div class="p-6 border-b border-gray-200 dark:border-gray-800">
+<h2 class="text-gray-900 dark:text-white text-lg font-semibold leading-tight">Constraints</h2>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Tell us about any project limitations we should consider.</p>
+</div>
+<div class="p-6 space-y-6">
+<div class="relative flex items-start">
+<div class="flex h-6 items-center"><input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" id="deadline" type="checkbox"/></div>
+<div class="ml-3 text-sm leading-6 flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+<label class="font-medium text-gray-900 dark:text-white" for="deadline">Fixed deadline?</label>
+<input class="block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm" type="date"/>
+</div>
+</div>
+<div class="relative flex items-start">
+<div class="flex h-6 items-center"><input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" id="budget" type="checkbox"/></div>
+<div class="ml-3 text-sm leading-6 flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+<label class="font-medium text-gray-900 dark:text-white" for="budget">Fixed budget?</label>
+<div class="relative rounded-md shadow-sm">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="text-gray-500 sm:text-sm">$</span>
+</div>
+<input class="block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white pl-7 pr-12 focus:border-primary focus:ring-primary sm:text-sm" placeholder="25,000" type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center">
+<select class="h-full rounded-md border-transparent bg-transparent py-0 pl-2 pr-7 text-gray-500 dark:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm">
+<option>USD</option>
+<option>CAD</option>
+<option>EUR</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div class="relative flex items-start">
+<div class="flex h-6 items-center"><input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" id="compliance" type="checkbox"/></div>
+<div class="ml-3 text-sm leading-6"><label class="font-medium text-gray-900 dark:text-white" for="compliance">High-compliance / regulated domain (e.g., HIPAA, GDPR)</label></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Navigation Buttons -->
+<div class="mt-8 pt-5 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center">
+<button class="flex items-center gap-2 min-w-[84px] cursor-pointer justify-center overflow-hidden rounded-lg h-10 px-4 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-200 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined">arrow_back</span>
+<span class="truncate">Back</span>
+</button>
+<button class="flex items-center gap-2 min-w-[84px] cursor-pointer justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
+<span class="truncate">Review &amp; Estimate</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New Estimate: Requirements - SmartEstimate AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#327be2",
+            "background-light": "#f6f7f8",
+            "background-dark": "#111821",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+  </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#212529] dark:text-gray-200">
+<div class="relative flex min-h-screen w-full">
+<!-- SideNavBar -->
+<aside class="flex h-screen w-64 flex-col border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark p-4 flex-shrink-0">
+<div class="flex items-center gap-3 py-2 px-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="SmartEstimate AI Logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxPwzd9kIM2v4QAFLP_TXI4ULT2MQNA_SCBURFl7TgqQE8Sd9HNVURuukzS39rz6_v6APP34dFWWucy_KiqRTeJVL-vz_Mqql4o_biZHdMv3uDkP3OU11EU95g08YF1Rk1veftN7-MAe4CytjIEVb-tpprWoIKuN-Rajo3g1DnMBCbL2LIXMQn8ufiSRkg8mF0BYTEZ6alDl7KlOx641yL9pCG5OhMFRXrWV7YZRCeP0bm_AmxwG83kiGrpvYCTIq7n8-VOCfFHCw");'></div>
+<h1 class="text-[#0e131b] dark:text-white text-base font-medium leading-normal">SmartEstimate AI</h1>
+</div>
+<nav class="mt-6 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 text-[#506d95] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-300" href="#">
+<span class="material-symbols-outlined text-xl !fill-1">description</span>
+<p class="text-sm font-medium leading-normal">Estimates</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#506d95] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl">folder</span>
+<p class="text-sm font-medium leading-normal">Projects</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#506d95] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+</nav>
+</aside>
+<div class="flex flex-1 flex-col">
+<!-- TopNavBar -->
+<header class="flex h-16 items-center justify-end whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 px-10 py-3 bg-white dark:bg-background-dark">
+<div class="flex items-center gap-4">
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAkc4tDmGUXtdlQ3u6H2tsyx1aJHpg6vut40wfWhRUPnm-RsfkRvzSbkpxzdqpAztxLOU0lOpwBWfC79MKQe3jGQHL-JCXIXQ6ko03QBIr33pCh1UDsakHwHU2VbY-3sJ0f_IwHuwfPFnKEfqoD2J47MobIE0MlLX5sJXPEn6s166bk7qpTAozsZH3peC4p7VO9TLcXkjNf7xxLQ5eLAxmMVwONjCp3J3Ei4WTxf2V0qkTF8u1_vNpAil8TebJcTFB0kce8v6a_5Ko");'></div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-10">
+<div class="mx-auto max-w-5xl">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap items-center gap-2 mb-4">
+<a class="text-sm font-medium text-[#506d95] dark:text-gray-400 hover:text-primary" href="#">Estimates</a>
+<span class="text-sm font-medium text-[#506d95] dark:text-gray-400">/</span>
+<span class="text-sm font-medium text-[#0e131b] dark:text-white">New Estimate</span>
+</div>
+<!-- Stepper -->
+<div class="w-full mb-8">
+<div class="flex items-center">
+<div class="flex items-center text-primary">
+<div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">1</div>
+<p class="ml-2 text-sm font-medium">Project Details</p>
+</div>
+<div class="flex-auto border-t-2 border-primary mx-4"></div>
+<div class="flex items-center text-primary">
+<div class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary bg-primary/10 text-primary">2</div>
+<p class="ml-2 text-sm font-medium">Requirements</p>
+</div>
+<div class="flex-auto border-t-2 border-gray-200 dark:border-gray-700 mx-4"></div>
+<div class="flex items-center text-gray-400 dark:text-gray-500">
+<div class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-200 dark:border-gray-700">3</div>
+<p class="ml-2 text-sm font-medium">AI Settings</p>
+</div>
+<div class="flex-auto border-t-2 border-gray-200 dark:border-gray-700 mx-4"></div>
+<div class="flex items-center text-gray-400 dark:text-gray-500">
+<div class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-200 dark:border-gray-700">4</div>
+<p class="ml-2 text-sm font-medium">Review</p>
+</div>
+</div>
+</div>
+<!-- PageHeading -->
+<div class="flex flex-wrap justify-between gap-3 mb-8">
+<div class="flex min-w-72 flex-col gap-2">
+<p class="text-[#0e131b] dark:text-white text-3xl font-bold tracking-tight">New Estimate: Requirements</p>
+<p class="text-[#506d95] dark:text-gray-400 text-base font-normal leading-normal">Provide the project requirements by pasting text or uploading a document.</p>
+</div>
+</div>
+<!-- Main Content Cards -->
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+<!-- Paste requirements card -->
+<div class="flex flex-col rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark shadow-sm">
+<div class="flex items-center gap-3 p-6 border-b border-gray-200 dark:border-gray-800">
+<span class="material-symbols-outlined text-primary text-2xl">content_paste</span>
+<h3 class="text-lg font-semibold text-[#0e131b] dark:text-white">Paste requirements</h3>
+</div>
+<div class="p-6">
+<label class="flex flex-col">
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-y overflow-hidden rounded-lg text-[#0e131b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-background-light dark:bg-gray-900/50 focus:border-primary min-h-60 placeholder:text-[#506d95] p-4 text-sm font-normal leading-normal" placeholder="Paste your project requirements, user stories, or scope document here..."></textarea>
+</label>
+</div>
+</div>
+<!-- Upload document card -->
+<div class="flex flex-col rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark shadow-sm">
+<div class="flex items-center gap-3 p-6 border-b border-gray-200 dark:border-gray-800">
+<span class="material-symbols-outlined text-primary text-2xl">upload_file</span>
+<h3 class="text-lg font-semibold text-[#0e131b] dark:text-white">Upload document</h3>
+</div>
+<div class="p-6">
+<div class="flex flex-col items-center justify-center w-full h-60 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700 bg-background-light dark:bg-gray-900/50 hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-5xl text-gray-400 dark:text-gray-600 mb-2">cloud_upload</span>
+<p class="text-sm text-[#506d95] dark:text-gray-400"><span class="font-semibold text-primary">Click to upload</span> or drag and drop</p>
+<p class="text-xs text-gray-400 dark:text-gray-500 mt-1">PDF, DOCX, TXT (MAX. 10MB)</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Requirements Quality Selector -->
+<div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+<label class="text-sm font-medium text-[#0e131b] dark:text-white flex-shrink-0" for="quality">Requirements quality</label>
+<div class="flex rounded-lg bg-gray-200/50 dark:bg-gray-800 p-1 w-full sm:w-auto">
+<button class="px-4 py-1.5 text-sm font-medium rounded-md w-full sm:w-auto text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700">Final</button>
+<button class="px-4 py-1.5 text-sm font-medium rounded-md w-full sm:w-auto bg-white dark:bg-gray-900 text-primary shadow-sm">Draft</button>
+<button class="px-4 py-1.5 text-sm font-medium rounded-md w-full sm:w-auto text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700">Rough idea</button>
+</div>
+</div>
+<!-- Navigation Buttons -->
+<div class="mt-12 flex justify-between border-t border-gray-200 dark:border-gray-800 pt-6">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-gray-200/80 text-[#0e131b] dark:bg-gray-800 dark:text-white gap-2 text-sm font-medium leading-normal tracking-[0.015em] min-w-0 px-6 hover:bg-gray-300/80 dark:hover:bg-gray-700">Back</button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-primary text-white gap-2 text-sm font-medium leading-normal tracking-[0.015em] min-w-0 px-6 hover:bg-primary/90">Next</button>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

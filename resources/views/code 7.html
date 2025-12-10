@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings - SmartEstimate AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#327be2",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111821",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a242f",
+                        "text-light": "#111821",
+                        "text-dark": "#f6f7f8",
+                        "subtext-light": "#6b7280",
+                        "subtext-dark": "#9ca3af",
+                        "border-light": "#e5e7eb",
+                        "border-dark": "#374151"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+<div class="flex h-screen">
+<!-- SideNavBar -->
+<aside class="w-64 flex-shrink-0 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark flex flex-col">
+<div class="flex flex-col gap-4 p-4 h-full">
+<div class="flex gap-3 items-center px-2 pt-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="SmartEstimate AI company logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLCXkuOIH1ZTtxggqLpK_4M-gA7jimJa8e7izpOM2oOq0X0u4kok0gH0LixuszY6hH7c952KfRuKaLKg9S_DI6deW8LVDdr-HyAQkqKs54vilJrcoJ-da27hnuP9BAinGKPSgjm9bKDlCfsOYIzJFnhgWPTk4vp2A38yc-j8keXG4FJfSkCK4qXFJaiRT1Eg6XiSiQGu0hKXd42hNU6mqIO9CvCKViwT7aK5NuW7Na98AibKqhHtfYFdgRKGGIUxJBHVFW5M3l7UE");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">SmartEstimate AI</h1>
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal">AI Project Estimator</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4 flex-grow">
+<a class="flex items-center gap-3 px-3 py-2 text-text-light dark:text-text-dark hover:bg-primary/10 rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-light dark:text-text-dark hover:bg-primary/10 rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl">calculate</span>
+<p class="text-sm font-medium leading-normal">Estimates</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-light dark:text-text-dark hover:bg-primary/10 rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl">folder</span>
+<p class="text-sm font-medium leading-normal">Projects</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-light dark:text-text-dark hover:bg-primary/10 rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl">group</span>
+<p class="text-sm font-medium leading-normal">Clients</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary dark:bg-primary/30" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">settings</span>
+<p class="text-sm font-bold leading-normal">Settings</p>
+</a>
+</nav>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-text-light dark:hover:text-text-dark rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl">help</span>
+<p class="text-sm font-medium leading-normal">Help</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-text-light dark:hover:text-text-dark rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl">logout</span>
+<p class="text-sm font-medium leading-normal">Logout</p>
+</a>
+</div>
+</div>
+</aside>
+<div class="flex flex-col flex-1 overflow-y-auto">
+<!-- TopNavBar -->
+<header class="flex items-center justify-end whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-6 sm:px-10 py-4 sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm z-10 h-16">
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center rounded-full h-10 w-10 hover:bg-primary/10 text-subtext-light dark:text-subtext-dark hover:text-text-light dark:hover:text-text-dark">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDYNipkA2Rxw86fPL1Nm8S9SG1RciJDCSDJDJuY7cw8RYET4jOr-T5hKcPDSypdpmWDx3FL_5wFJK8lkCeyUMV648Z_PpwIJpnAL7J-WuhcFCGQjNqih-4NRTHgJYUMV0xlsoei67RtKJ2jsCxRsJzfGY_Uaf1RBep_Rq3mk5_NTnntfDLwpqiPTHU9puuzVIrvGU4K68-xxdX6PPtw5uhmFbwPkfloTQyT2c5jdCjNMCp7_tQ0aj0fD8ILRQ-98I4JaDh642DlUnE");'></div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 p-6 sm:p-10">
+<div class="max-w-4xl mx-auto">
+<!-- PageHeading -->
+<div class="flex flex-wrap justify-between gap-3 mb-8">
+<h1 class="text-text-light dark:text-text-dark text-4xl font-black leading-tight tracking-[-0.033em]">Settings</h1>
+</div>
+<div class="flex flex-col gap-8">
+<!-- Defaults Card -->
+<div class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm">
+<div class="p-6 border-b border-border-light dark:border-border-dark">
+<h2 class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em]">Defaults</h2>
+<p class="text-subtext-light dark:text-subtext-dark text-sm mt-1">Set your default parameters for new project estimations.</p>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- TextField: Default Country -->
+<label class="flex flex-col">
+<p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal pb-2">Default Country</p>
+<select class="form-select w-full rounded-lg text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-subtext-light dark:placeholder:text-subtext-dark px-3 text-base font-normal leading-normal">
+<option>United States</option>
+<option>Canada</option>
+<option>United Kingdom</option>
+<option>Australia</option>
+</select>
+</label>
+<!-- TextField: Default Tech Stack -->
+<label class="flex flex-col">
+<p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal pb-2">Default Tech Stack</p>
+<select class="form-select w-full rounded-lg text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-subtext-light dark:placeholder:text-subtext-dark px-3 text-base font-normal leading-normal">
+<option>React / Node.js</option>
+<option>Vue / Laravel</option>
+<option>Angular / .NET</option>
+<option>Python / Django</option>
+</select>
+</label>
+<!-- TextField: Default Quality Level -->
+<label class="flex flex-col">
+<p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal pb-2">Default Quality Level</p>
+<select class="form-select w-full rounded-lg text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-subtext-light dark:placeholder:text-subtext-dark px-3 text-base font-normal leading-normal">
+<option>Standard</option>
+<option>High</option>
+<option>Enterprise</option>
+</select>
+</label>
+</div>
+</div>
+<!-- Hourly Rates Card -->
+<div class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm">
+<div class="p-6 border-b border-border-light dark:border-border-dark">
+<h2 class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em]">Hourly rates</h2>
+<p class="text-subtext-light dark:text-subtext-dark text-sm mt-1">Define the hourly rates for different roles on your team.</p>
+</div>
+<div class="p-2 sm:p-6">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr>
+<th class="p-4 text-sm font-semibold text-subtext-light dark:text-subtext-dark">Role</th>
+<th class="p-4 text-sm font-semibold text-subtext-light dark:text-subtext-dark">Rate (USD/hr)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-t border-border-light dark:border-border-dark">
+<td class="p-4 text-sm font-medium text-text-light dark:text-text-dark">Backend</td>
+<td class="p-4 w-48">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-subtext-light dark:text-subtext-dark">$</span>
+<input class="form-input pl-7 w-full rounded-lg text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-subtext-light dark:placeholder:text-subtext-dark text-base font-normal leading-normal" type="number" value="120"/>
+</div>
+</td>
+</tr>
+<tr class="border-t border-border-light dark:border-border-dark">
+<td class="p-4 text-sm font-medium text-text-light dark:text-text-dark">Frontend</td>
+<td class="p-4 w-48">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-subtext-light dark:text-subtext-dark">$</span>
+<input class="form-input pl-7 w-full rounded-lg text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-subtext-light dark:placeholder:text-subtext-dark text-base font-normal leading-normal" type="number" value="110"/>
+</div>
+</td>
+</tr>
+<tr class="border-t border-border-light dark:border-border-dark">
+<td class="p-4 text-sm font-medium text-text-light dark:text-text-dark">QA</td>
+<td class="p-4 w-48">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-subtext-light dark:text-subtext-dark">$</span>
+<input class="form-input pl-7 w-full rounded-lg text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-subtext-light dark:placeholder:text-subtext-dark text-base font-normal leading-normal" type="number" value="90"/>
+</div>
+</td>
+</tr>
+<tr class="border-t border-border-light dark:border-border-dark">
+<td class="p-4 text-sm font-medium text-text-light dark:text-text-dark">PM</td>
+<td class="p-4 w-48">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-subtext-light dark:text-subtext-dark">$</span>
+<input class="form-input pl-7 w-full rounded-lg text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-subtext-light dark:placeholder:text-subtext-dark text-base font-normal leading-normal" type="number" value="130"/>
+</div>
+</td>
+</tr>
+<tr class="border-t border-border-light dark:border-border-dark">
+<td class="p-4 text-sm font-medium text-text-light dark:text-text-dark">Designer</td>
+<td class="p-4 w-48">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-subtext-light dark:text-subtext-dark">$</span>
+<input class="form-input pl-7 w-full rounded-lg text-text-light dark:text-text-dark focus:outline-none focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-subtext-light dark:placeholder:text-subtext-dark text-base font-normal leading-normal" type="number" value="100"/>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col sm:flex-row justify-end items-center gap-4 pt-4">
+<button class="w-full sm:w-auto flex items-center justify-center rounded-lg h-12 px-6 text-sm font-bold bg-background-light dark:bg-card-dark border border-border-light dark:border-border-dark text-text-light dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Reset to recommended defaults</button>
+<button class="w-full sm:w-auto flex items-center justify-center rounded-lg h-12 px-6 text-sm font-bold bg-primary text-white hover:bg-primary/90 transition-colors">Save changes</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>
