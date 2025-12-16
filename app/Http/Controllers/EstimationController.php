@@ -61,9 +61,9 @@ class EstimationController extends Controller implements HasMiddleware
     {
         $estimates = Estimate::query()
             ->with(['project'])
-            ->where('project_id', fn ($q) => $q->select('id')
-                ->from('projects')
-                ->where('user_id', Auth::id()))
+            ->whereHas('project', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
             ->latest()
             ->paginate(10);
 

@@ -23,21 +23,20 @@ class DashboardController extends Controller
             ->take(10)
             ->get();
 
-        // Calculate dashboard statistics
+        // Calculate dashboard statistics  
         $totalEstimates = Estimate::whereHas('project', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })->count();
-        $totalProjects = $recentEstimates->groupBy('project_id')->count();
+        
+        // Get total unique projects for this user
+        $totalProjects = Estimate::whereHas('project', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->distinct('project_id')->count('project_id');
         // For now, set a placeholder confidence score since we need to determine how to calculate this
         $avgConfidence = 0;
 
-        // Calculate total estimated value
-        $totalValue = $recentEstimates->sum(function ($estimate) {
-            $minHours = $estimate->min_hours ?? 0;
-            $maxHours = $estimate->max_hours ?? 0;
-
-            return ($minHours + $maxHours) / 2 * 100; // Assuming $100/hour average
-        });
+        // Calculate total estimated value from actual cost data
+        $totalValue = $recentEstimates->sum('total_cost');
 
         return view('dashboard', [
             'recentEstimates' => $recentEstimates,

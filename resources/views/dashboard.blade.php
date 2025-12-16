@@ -33,31 +33,34 @@
                                     {{ $estimate->project->domain_type->label() }}
                                 </td>
                                 <td class="h-[72px] px-6 py-2 text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
-                                    {{ implode(', ', $estimate->tech_stack ?? []) }}
+                                    @if(is_array($estimate->project->tech_stack))
+                                        {{ implode(', ', $estimate->project->tech_stack) }}
+                                    @else
+                                        {{ implode(', ', json_decode($estimate->project->tech_stack ?? '[]', true)) }}
+                                    @endif
                                 </td>
                                 <td class="h-[72px] px-6 py-2 text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
-                                    {{ strtoupper($estimate->workforce_country_code) }}
+                                    {{ $estimate->project->country ?? 'US' }}
                                 </td>
                                 <td class="h-[72px] px-6 py-2 text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
-                                    ${{ number_format(($estimate->total_hours_min + $estimate->total_hours_max) / 2 * 100) }}
+                                    ${{ number_format($estimate->total_cost, 0) }}
                                 </td>
                                 <td class="h-[72px] px-6 py-2 text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
-                                    {{ ceil(($estimate->total_hours_min + $estimate->total_hours_max) / 2 / 40) }} weeks
+                                    {{ ceil($estimate->total_hours / 40) }} weeks
                                 </td>
                                 <td class="h-[72px] px-6 py-2 text-sm font-normal leading-normal">
                                     @php
-                                        $confidenceClass = match(true) {
-                                            $estimate->confidence_score >= 80 => 'bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300',
-                                            $estimate->confidence_score >= 50 => 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300',
-                                            default => 'bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300'
-                                        };
-                                        $confidenceLabel = match(true) {
-                                            $estimate->confidence_score >= 80 => 'High',
-                                            $estimate->confidence_score >= 50 => 'Medium',
-                                            default => 'Low'
+                                        $confidence = $estimate->confidence_level ?? \App\Enums\ConfidenceLevel::Medium;
+                                        $confidenceClass = match($confidence) {
+                                            \App\Enums\ConfidenceLevel::High => 'bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300',
+                                            \App\Enums\ConfidenceLevel::Medium => 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300',
+                                            \App\Enums\ConfidenceLevel::Low => 'bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300',
+                                            default => 'bg-gray-100 dark:bg-gray-900/50 text-gray-700 dark:text-gray-300'
                                         };
                                     @endphp
-                                    <span class="inline-flex items-center rounded-full {{ $confidenceClass }} px-3 py-1 text-xs font-medium">{{ $confidenceLabel }}</span>
+                                    <span class="inline-flex items-center rounded-full {{ $confidenceClass }} px-3 py-1 text-xs font-medium">
+                                        {{ $confidence->label() }}
+                                    </span>
                                 </td>
                                 <td class="h-[72px] px-6 py-2 text-primary dark:text-primary/90 text-sm font-bold leading-normal tracking-[0.015em]">
                                     <a href="{{ route('estimates.show', $estimate) }}" class="hover:underline">View details</a>
