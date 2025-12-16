@@ -69,16 +69,16 @@
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Confidence Level</p>
                         <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1 capitalize">{{ $estimate->confidence_level ?? 'Medium' }}</p>
                         @php
-                            $confidence = $estimate->confidence_level ?? 'medium';
+                            $confidence = $estimate->confidence_level ?? \App\Enums\ConfidenceLevel::Medium;
                             $badgeClass = match($confidence) {
-                                'high' => 'bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300',
-                                'medium' => 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300',
-                                'low' => 'bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300',
+                                \App\Enums\ConfidenceLevel::High => 'bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300',
+                                \App\Enums\ConfidenceLevel::Medium => 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300',
+                                \App\Enums\ConfidenceLevel::Low => 'bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300',
                                 default => 'bg-gray-100 dark:bg-gray-900/50 text-gray-700 dark:text-gray-300'
                             };
                         @endphp
                         <span class="inline-flex items-center rounded-full {{ $badgeClass }} px-2 py-1 text-xs font-medium mt-1">
-                            {{ ucfirst($confidence) }} Confidence
+                            {{ $confidence->label() }} Confidence
                         </span>
                     </div>
                     <div class="bg-purple-100 dark:bg-purple-900/50 p-3 rounded-full">
@@ -96,11 +96,11 @@
                 <div class="space-y-3">
                     <div>
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Project Type</p>
-                        <p class="text-gray-900 dark:text-white">{{ ucfirst(str_replace('_', ' ', $estimate->project->project_type)) }}</p>
+                        <p class="text-gray-900 dark:text-white">{{ $estimate->project->project_type->label() }}</p>
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Domain</p>
-                        <p class="text-gray-900 dark:text-white">{{ ucfirst(str_replace('_', ' ', $estimate->project->domain_type)) }}</p>
+                        <p class="text-gray-900 dark:text-white">{{ $estimate->project->domain_type->label() }}</p>
                     </div>
                     @if($estimate->project->description)
                         <div>

@@ -30,7 +30,7 @@
                                     {{ $estimate->project->name }}
                                 </td>
                                 <td class="h-[72px] px-6 py-2 text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
-                                    {{ $estimate->project->domain_type ? ucfirst(str_replace('_', ' ', $estimate->project->domain_type)) : 'N/A' }}
+                                    {{ $estimate->project->domain_type ? $estimate->project->domain_type->label() : 'N/A' }}
                                 </td>
                                 <td class="h-[72px] px-6 py-2 text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">
                                     Laravel, PHP
@@ -46,16 +46,16 @@
                                 </td>
                                 <td class="h-[72px] px-6 py-2 text-sm font-normal leading-normal">
                                     @php
-                                        $confidence = $estimate->confidence_level ?? 'medium';
+                                        $confidence = $estimate->confidence_level ?? \App\Enums\ConfidenceLevel::Medium;
                                         $badgeClass = match($confidence) {
-                                            'high' => 'bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300',
-                                            'medium' => 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300',
-                                            'low' => 'bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300',
+                                            \App\Enums\ConfidenceLevel::High => 'bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300',
+                                            \App\Enums\ConfidenceLevel::Medium => 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300',
+                                            \App\Enums\ConfidenceLevel::Low => 'bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300',
                                             default => 'bg-gray-100 dark:bg-gray-900/50 text-gray-700 dark:text-gray-300'
                                         };
                                     @endphp
                                     <span class="inline-flex items-center rounded-full {{ $badgeClass }} px-3 py-1 text-xs font-medium">
-                                        {{ ucfirst($confidence) }}
+                                        {{ $confidence->label() }}
                                     </span>
                                 </td>
                                 <td class="h-[72px] px-6 py-2 text-primary dark:text-primary/90 text-sm font-bold leading-normal tracking-[0.015em]">

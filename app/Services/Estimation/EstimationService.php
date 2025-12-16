@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * EstimationService
+ * 
+ * Core service for processing project estimations
+ * Orchestrates AI client, cost calculation, and data persistence
+ * 
+ * @author Rubel Mahamud <rubelmahamud9997@gmail.com>
+ * @version 1.2
+ * @since 2025-12-16
+ */
+
 namespace App\Services\Estimation;
 
 use App\DTO\EstimationContextDTO;
@@ -48,15 +59,12 @@ class EstimationService implements EstimationServiceInterface
             // Step 1: Preprocess requirements
             $processedRequirements = $this->requirementsPreprocessor->process($requirements);
 
-            // Step 2: Get AI estimation payload
-            $aiPayload = $this->aiClient->generateEstimatePayload(
+            // Step 2: Get AI estimation payload (already parsed)
+            $parsedData = $this->aiClient->generateEstimatePayload(
                 $projectBasics,
                 $processedRequirements,
                 $context
             );
-
-            // Step 3: Parse AI response into structured data
-            $parsedData = $this->aiClient->parseAiResponse($aiPayload);
 
             // Step 4: Build DTOs from parsed data
             $estimationResult = $this->buildEstimationResultDTO(
@@ -206,7 +214,8 @@ class EstimationService implements EstimationServiceInterface
             $hourlyRate = $this->rateProvider->getHourlyRate(
                 $userId,
                 $roleData['role'],
-                $context->teamSeniority
+                $context->teamSeniority,
+                $context->customRates
             );
 
             $recommendedTeam[] = new RecommendedRoleDTO(

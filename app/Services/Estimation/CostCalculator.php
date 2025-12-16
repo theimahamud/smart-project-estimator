@@ -8,7 +8,7 @@ use App\DTO\RecommendedRoleDTO;
 
 class CostCalculator
 {
-    private const HOURS_PER_WEEK = 40;
+    private const DEFAULT_HOURS_PER_WEEK = 40;
 
     private const TEAM_EFFICIENCY_FACTOR = 0.75; // Account for collaboration overhead
 
@@ -27,12 +27,16 @@ class CostCalculator
         $totalHoursMax = array_sum(array_map(fn ($module) => $module->totalHoursMax, $modules));
         $averageHours = ($totalHoursMin + $totalHoursMax) / 2;
 
-        // Calculate duration based on team size and efficiency
+        // Calculate duration based on team configuration and efficiency
         $totalTeamMembers = array_sum(array_map(fn ($role) => $role->count, $team));
-        $effectiveTeamSize = max(1, $totalTeamMembers * self::TEAM_EFFICIENCY_FACTOR);
 
-        $durationWeeksMin = max(1, ceil($totalHoursMin / ($effectiveTeamSize * self::HOURS_PER_WEEK)));
-        $durationWeeksMax = ceil($totalHoursMax / ($effectiveTeamSize * self::HOURS_PER_WEEK));
+        // Use context-specific team size and work hours
+        $availableTeamSize = $context->availableTeamSize;
+        $hoursPerWeek = $context->workHoursPerDay * 5; // 5 working days per week
+        $effectiveTeamSize = max(1, min($availableTeamSize, $totalTeamMembers) * self::TEAM_EFFICIENCY_FACTOR);
+
+        $durationWeeksMin = max(1, ceil($totalHoursMin / ($effectiveTeamSize * $hoursPerWeek)));
+        $durationWeeksMax = ceil($totalHoursMax / ($effectiveTeamSize * $hoursPerWeek));
 
         // Calculate costs
         $costCentsMin = $this->calculateTotalCost($team, $totalHoursMin);
@@ -122,6 +126,27 @@ class CostCalculator
         $factors['cost_typical'] *= $countryMultiplier;
         $factors['cost_max'] *= $countryMultiplier;
 
+        // Adjust for available team size (smaller teams may need more time)
+        if ($context->availableTeamSize <= 2) {
+            $factors['duration_min'] *= 1.2;
+            $factors['duration_max'] *= 1.3;
+        } elseif ($context->availableTeamSize >= 8) {
+            // Larger teams have coordination overhead
+            $factors['duration_min'] *= 1.1;
+            $factors['duration_max'] *= 1.2;
+        }
+
+        // Adjust for work hours per day
+        $hoursAdjustment = match ($context->workHoursPerDay) {
+            4 => ['duration' => 2.0], // Part-time
+            6 => ['duration' => 1.33], // Reduced hours
+            8 => ['duration' => 1.0], // Standard
+            10 => ['duration' => 0.8], // Extended hours
+        };
+
+        $factors['duration_min'] *= $hoursAdjustment['duration'];
+        $factors['duration_max'] *= $hoursAdjustment['duration'];
+
         return $factors;
     }
 
@@ -155,8 +180,8 @@ class CostCalculator
         float $efficiency = self::TEAM_EFFICIENCY_FACTOR
     ): array {
         $effectiveTeamSize = max(1, $teamSize * $efficiency);
-        $weeksMin = max(1, ceil($totalHours * 0.8 / ($effectiveTeamSize * self::HOURS_PER_WEEK)));
-        $weeksMax = ceil($totalHours * 1.2 / ($effectiveTeamSize * self::HOURS_PER_WEEK));
+        $weeksMin = max(1, ceil($totalHours * 0.8 / ($effectiveTeamSize * self::DEFAULT_HOURS_PER_WEEK)));
+        $weeksMax = ceil($totalHours * 1.2 / ($effectiveTeamSize * self::DEFAULT_HOURS_PER_WEEK));
 
         return [
             'weeks_min' => $weeksMin,

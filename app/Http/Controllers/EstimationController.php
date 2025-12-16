@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * EstimationController
+ * 
+ * Handles AI-powered project estimation workflow
+ * 
+ * @author Rubel Mahamud <rubelmahamud9997@gmail.com>
+ * @version 1.0
+ * @since 2025-12-16
+ */
+
 namespace App\Http\Controllers;
 
 use App\DTO\EstimationContextDTO;
@@ -14,6 +24,7 @@ use App\Http\Requests\EstimationRequest;
 use App\Models\Client;
 use App\Models\Estimate;
 use App\Services\Estimation\EstimationServiceInterface;
+use App\Services\Requirements\PdfTextExtractor;
 use App\Services\Settings\RateProvider;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
@@ -30,6 +41,7 @@ class EstimationController extends Controller implements HasMiddleware
     public function __construct(
         private readonly EstimationServiceInterface $estimationService,
         private readonly RateProvider $rateProvider,
+        private readonly PdfTextExtractor $pdfExtractor,
     ) {}
 
     public static function middleware(): array
@@ -39,6 +51,12 @@ class EstimationController extends Controller implements HasMiddleware
         ];
     }
 
+    /**
+     * Display paginated list of user's estimates
+     * 
+     * @author Rubel Mahamud
+     * @return View
+     */
     public function index(): View
     {
         $estimates = Estimate::query()
@@ -59,6 +77,9 @@ class EstimationController extends Controller implements HasMiddleware
             ->orderBy('name')
             ->get();
 
+        // Get quick description from homepage if provided
+        $quickDescription = request('quick_description');
+
         return view('estimates.create', [
             'clients' => $clients,
             'projectTypes' => ProjectType::cases(),
@@ -66,31 +87,53 @@ class EstimationController extends Controller implements HasMiddleware
             'qualityLevels' => QualityLevel::cases(),
             'teamSeniorities' => TeamSeniority::cases(),
             'requirementsQualities' => RequirementsQuality::cases(),
+            'quickDescription' => $quickDescription,
         ]);
     }
 
+    /**
+     * Process estimation request with AI analysis and team parameters
+     * Enhanced with timeout handling and proper error management
+     * 
+     * @author Rubel Mahamud
+     * @param EstimationRequest $request
+     * @return RedirectResponse|JsonResponse
+     */
     public function store(EstimationRequest $request): RedirectResponse|JsonResponse
     {
         try {
-            // Build all requirements text into single string
-            $allRequirements = implode("\n\n", array_filter([
-                "Functional Requirements:\n".$request->validated('functional_requirements'),
-                $request->validated('technical_requirements')
-                    ? "Technical Requirements:\n".$request->validated('technical_requirements')
-                    : null,
-                $request->validated('quality_requirements')
-                    ? "Quality Requirements:\n".$request->validated('quality_requirements')
-                    : null,
-                $request->validated('constraints')
-                    ? "Constraints:\n".$request->validated('constraints')
-                    : null,
-                $request->validated('assumptions')
-                    ? "Assumptions:\n".$request->validated('assumptions')
-                    : null,
-                $request->validated('additional_context')
-                    ? "Additional Context:\n".$request->validated('additional_context')
-                    : null,
-            ]));
+            // Handle requirements input based on method
+            if ($request->validated('input_method') === 'pdf') {
+                // Extract text from uploaded PDF
+                $allRequirements = $this->pdfExtractor->extractTextFromUploadedFile(
+                    $request->file('requirements_file')
+                );
+
+                // Add any additional context if provided
+                if ($request->validated('additional_context')) {
+                    $allRequirements .= "\n\nAdditional Context:\n".$request->validated('additional_context');
+                }
+            } else {
+                // Build all requirements text from form fields
+                $allRequirements = implode("\n\n", array_filter([
+                    "Functional Requirements:\n".$request->validated('functional_requirements'),
+                    $request->validated('technical_requirements')
+                        ? "Technical Requirements:\n".$request->validated('technical_requirements')
+                        : null,
+                    $request->validated('quality_requirements')
+                        ? "Quality Requirements:\n".$request->validated('quality_requirements')
+                        : null,
+                    $request->validated('constraints')
+                        ? "Constraints:\n".$request->validated('constraints')
+                        : null,
+                    $request->validated('assumptions')
+                        ? "Assumptions:\n".$request->validated('assumptions')
+                        : null,
+                    $request->validated('additional_context')
+                        ? "Additional Context:\n".$request->validated('additional_context')
+                        : null,
+                ]));
+            }
 
             // Create DTOs with correct constructor parameters
             $projectBasics = new ProjectBasicsDTO(
@@ -109,13 +152,27 @@ class EstimationController extends Controller implements HasMiddleware
                 quality: RequirementsQuality::from($request->validated('requirements_quality'))
             );
 
+            // Convert target budget to cents if provided
+            $targetBudgetCents = $request->validated('target_budget')
+                ? (int) ($request->validated('target_budget') * 100)
+                : null;
+
+            // Filter out null/empty custom rates
+            $customRates = $request->validated('custom_rates')
+                ? array_filter($request->validated('custom_rates'), fn ($rate) => $rate !== null && $rate !== '')
+                : null;
+
             $context = new EstimationContextDTO(
                 workforceCountryCode: 'US', // Default to US, could be configurable
                 teamSeniority: TeamSeniority::from($request->validated('team_seniority')),
                 techStackSlugs: ['laravel', 'php', 'mysql'], // Default tech stack
                 isHighCompliance: false,
                 fixedDeadline: null,
-                fixedBudgetCents: null
+                fixedBudgetCents: null,
+                availableTeamSize: (int) $request->validated('available_team_size'),
+                workHoursPerDay: (int) $request->validated('work_hours_per_day'),
+                targetBudgetCents: $targetBudgetCents,
+                customRates: $customRates
             );
 
             // Use the service's estimateAndPersist method which handles everything

@@ -1,11 +1,21 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laraveldaily/starter-kit",
+    "name": "rubel/smartestimate-ai",
     "type": "project",
-    "description": "LaravelDaily Starter Kit for the Laravel framework.",
+    "description": "SmartEstimate AI - AI-powered project estimation platform by Rubel Mahamud",
     "keywords": [
         "laravel",
-        "framework"
+        "ai",
+        "estimation",
+        "deepseek",
+        "project-management"
+    ],
+    "authors": [
+        {
+            "name": "Rubel Mahamud",
+            "email": "rubelmahamud9997@gmail.com",
+            "role": "Lead Developer"
+        }
     ],
     "license": "MIT",
     "require": {
@@ -14,7 +24,8 @@
         "echolabsdev/prism": "^0.99.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "owenvoke/blade-fontawesome": "^2.9"
+        "owenvoke/blade-fontawesome": "^2.9",
+        "smalot/pdfparser": "^2.12"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

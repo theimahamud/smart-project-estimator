@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * EstimationAiClient
+ * 
+ * Handles AI-powered estimation using DeepSeek API with PrismPHP
+ * Includes timeout handling, retry logic, and response validation
+ * 
+ * @author Rubel Mahamud <rubelmahamud9997@gmail.com>
+ * @version 1.2
+ * @since 2025-12-16
+ */
+
 namespace App\Services\AI;
 
 use App\DTO\EstimationContextDTO;
@@ -220,6 +231,10 @@ PROMPT;
     {
         $lastException = null;
 
+        // Temporarily increase PHP execution time for AI calls
+        $originalTimeLimit = ini_get('max_execution_time');
+        set_time_limit(config('ai.services.deepseek.timeout', 180) + 60); // Add 60s buffer
+
         for ($attempt = 0; $attempt <= self::MAX_RETRIES; $attempt++) {
             try {
                 $response = Prism::text()
@@ -229,8 +244,13 @@ PROMPT;
                     ->usingTemperature(config('ai.services.deepseek.temperature', 0.1))
                     ->withMaxTokens(config('ai.services.deepseek.max_tokens', 1500))
                     ->withClientOptions([
-                        'timeout' => config('ai.services.deepseek.timeout', 120),
-                        'connect_timeout' => 10,
+                        'timeout' => config('ai.services.deepseek.timeout', 180),
+                        'connect_timeout' => 30,
+                        'read_timeout' => config('ai.services.deepseek.timeout', 180),
+                        'curl' => [
+                            CURLOPT_TIMEOUT => config('ai.services.deepseek.timeout', 180),
+                            CURLOPT_CONNECTTIMEOUT => 30,
+                        ],
                     ])
                     ->asText();
 
@@ -242,6 +262,9 @@ PROMPT;
                     'attempt' => $attempt + 1,
                     'response_length' => strlen($response->text),
                 ]);
+
+                // Restore original time limit on success
+                set_time_limit((int) $originalTimeLimit);
 
                 return $response;
 
@@ -265,6 +288,9 @@ PROMPT;
                 }
             }
         }
+
+        // Restore original time limit
+        set_time_limit((int) $originalTimeLimit);
 
         throw new AiEstimationFailedException(
             'Failed to get response from DeepSeek after '.(self::MAX_RETRIES + 1).' attempts',

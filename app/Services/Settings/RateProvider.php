@@ -70,9 +70,14 @@ class RateProvider
         ],
     ];
 
-    public function getHourlyRate(int $userId, string $role, TeamSeniority $seniority): float
+    public function getHourlyRate(int $userId, string $role, TeamSeniority $seniority, ?array $customRates = null): float
     {
-        // Try to get user-specific rate first
+        // Check for custom rates first (from form)
+        if ($customRates && isset($customRates[$role])) {
+            return (float) $customRates[$role];
+        }
+
+        // Try to get user-specific rate
         $userRate = $this->getUserRate($userId, $role, $seniority);
         if ($userRate !== null) {
             return $userRate;
@@ -155,7 +160,7 @@ class RateProvider
         return array_unique(array_merge($userRoles, $defaultRoles));
     }
 
-    public function estimateTeamCost(array $teamComposition, int $userId): array
+    public function estimateTeamCost(array $teamComposition, int $userId, ?array $customRates = null): array
     {
         $totalCost = 0;
         $breakdown = [];
@@ -166,7 +171,7 @@ class RateProvider
             $hours = $roleData['hours'];
             $seniority = TeamSeniority::from($roleData['seniority'] ?? 'mid');
 
-            $hourlyRate = $this->getHourlyRate($userId, $role, $seniority);
+            $hourlyRate = $this->getHourlyRate($userId, $role, $seniority, $customRates);
             $roleCost = $hours * $hourlyRate;
             $totalCost += $roleCost;
 

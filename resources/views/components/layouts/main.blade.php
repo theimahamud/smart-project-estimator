@@ -65,6 +65,10 @@
                             <span class="material-symbols-outlined">history</span>
                             <p class="text-sm font-medium leading-normal">History</p>
                         </a>
+                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('clients.*') ? 'bg-primary/10 text-primary dark:bg-primary/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10' }}" href="{{ route('clients.index') }}">
+                            <span class="material-symbols-outlined {{ request()->routeIs('clients.*') ? 'fill text-primary' : '' }}">groups</span>
+                            <p class="text-sm font-medium leading-normal">Clients</p>
+                        </a>
                         <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10" href="{{ route('settings.profile.edit') }}">
                             <span class="material-symbols-outlined">settings</span>
                             <p class="text-sm font-medium leading-normal">Settings</p>

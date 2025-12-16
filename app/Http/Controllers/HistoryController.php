@@ -13,7 +13,9 @@ class HistoryController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Estimate::where('user_id', Auth::id())
+        $query = Estimate::whereHas('project', function ($projectQuery) {
+            $projectQuery->where('user_id', Auth::id());
+        })
             ->with(['project', 'project.client']);
 
         // Apply filters if provided
@@ -21,9 +23,9 @@ class HistoryController extends Controller
             $search = $request->get('search');
             $query->whereHas('project', function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhereHas('client', function ($clientQuery) use ($search) {
-                      $clientQuery->where('name', 'like', "%{$search}%");
-                  });
+                    ->orWhereHas('client', function ($clientQuery) use ($search) {
+                        $clientQuery->where('name', 'like', "%{$search}%");
+                    });
             });
         }
 
@@ -35,13 +37,13 @@ class HistoryController extends Controller
             $confidenceFilter = $request->get('confidence');
             switch ($confidenceFilter) {
                 case 'high':
-                    $query->where('confidence_score', '>=', 80);
+                    $query->where('confidence_level', 'High');
                     break;
                 case 'medium':
-                    $query->whereBetween('confidence_score', [50, 79]);
+                    $query->where('confidence_level', 'Medium');
                     break;
                 case 'low':
-                    $query->where('confidence_score', '<', 50);
+                    $query->where('confidence_level', 'Low');
                     break;
             }
         }
@@ -59,8 +61,8 @@ class HistoryController extends Controller
      */
     public function show(Estimate $estimate)
     {
-        // Ensure the user can only view their own estimates
-        if ($estimate->user_id !== Auth::id()) {
+        // Ensure the user can only view their own estimates (through project ownership)
+        if ($estimate->project->user_id !== Auth::id()) {
             abort(403);
         }
 

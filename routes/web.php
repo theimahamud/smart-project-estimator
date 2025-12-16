@@ -13,10 +13,13 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
+
     // Estimates
     Route::resource('estimates', EstimationController::class)->except(['edit', 'update']);
-    
+
+    // Clients
+    Route::resource('clients', \App\Http\Controllers\ClientController::class);
+
     // History
     Route::get('history', [HistoryController::class, 'index'])->name('history.index');
     Route::get('history/{estimate}', [HistoryController::class, 'show'])->name('history.show');

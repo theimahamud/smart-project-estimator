@@ -1,19 +1,47 @@
-# Laravel + Blade Starter Kit
+# SmartEstimate AI - AI-Powered Project Estimator
+
+> **Developed by Rubel Mahamud** | rubelmahamud9997@gmail.com
 
 ---
 
-## Introduction
+## 🎯 Project Overview
 
-Our Laravel 12 + Blade starter kit provides the typical functionality found in the Laravel Starter kits, but with a few key differences:
+**SmartEstimate AI** is a comprehensive, AI-powered project estimation platform that helps agencies and developers generate accurate time and cost estimates for software projects. Built with Laravel 12 and enhanced with DeepSeek AI integration.
 
-- A CoreUI/AdminLTE inspired design layout
-- Blade + AlpineJS code
+### 🚀 Key Features
 
-This kit aims to fill the gap where there is no simple **Blade only** starter kit available.
+- **AI-Powered Estimation** - DeepSeek integration with advanced timeout handling
+- **PDF Requirements Processing** - Drag-and-drop PDF upload with text extraction
+- **Advanced Team Configuration** - Custom hourly rates, team sizes, work hours
+- **Complete Client Management** - Full CRUD operations with beautiful UI
+- **Cost Calculations** - Team-aware pricing and duration estimates
+- **Professional Authentication** - Responsive login/register flows
+- **Mobile-Responsive Design** - Optimized for all device sizes
 
-Our internal goal at Laravel Daily is to start using this starter kit for our Demo applications, to avoid overwhelming our audience with Vue/Livewire/React if we had used one of the official Laravel 12 starter kits.
+### 🛠 Technical Stack
 
-**Note:** This is Work in Progress kit, so it will get updates and fixes/features as we go.
+- **Backend**: Laravel 12 + PHP 8.2
+- **Frontend**: Blade Templates + Tailwind CSS 4 + Alpine.js
+- **AI Integration**: PrismPHP + DeepSeek API
+- **Database**: MySQL with comprehensive relationships
+- **Architecture**: Clean service-based architecture
+
+---
+
+## 👨‍💻 Author & Development
+
+**Primary Developer**: Rubel Mahamud  
+**Email**: rubelmahamud9997@gmail.com  
+**Development Period**: December 2025  
+**Version**: 1.2 (Production Ready)
+
+### 🔧 Recent Enhancements by Rubel Mahamud
+
+1. **AI Timeout Resolution** - Fixed 60-second timeout issues with proper Guzzle configuration
+2. **Team Parameter System** - Advanced team configuration with custom rates
+3. **Client Management** - Complete CRUD system with authorization
+4. **Enum Type Fixes** - Resolved ucfirst() errors with proper enum handling
+5. **Code Quality** - Laravel Pint formatting and clean architecture
 
 ---
 

@@ -23,7 +23,7 @@ return [
             'model' => env('DEEPSEEK_MODEL', 'deepseek-coder'),
             'max_tokens' => env('AI_MAX_TOKENS', 4000),
             'temperature' => env('AI_TEMPERATURE', 0.1),
-            'timeout' => env('AI_TIMEOUT', 30),
+            'timeout' => env('AI_TIMEOUT', 180),
         ],
 
         // Fallback for development/testing
